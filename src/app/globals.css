@@ -1,0 +1,366 @@
+/* ============================================================
+   FGL Ecosystem — Global Styles
+   Feel Great Life · Spa & SME Platform
+   ============================================================ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Google Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+/* ── CSS Variables ── */
+:root {
+  /* FGL Brand Colors */
+  --color-primary:        #7c3aed;
+  --color-primary-light:  #9333ea;
+  --color-primary-dark:   #6d28d9;
+  --color-gold:           #f59e0b;
+  --color-gold-light:     #fbbf24;
+  --color-gold-dark:      #d97706;
+
+  /* Backgrounds */
+  --bg-base:       #0f0a1e;
+  --bg-surface:    #1a0f3e;
+  --bg-elevated:   #231550;
+  --bg-card:       rgba(255, 255, 255, 0.04);
+  --bg-card-hover: rgba(255, 255, 255, 0.07);
+
+  /* Text */
+  --text-primary:   #f8f5ff;
+  --text-secondary: #c4b5fd;
+  --text-muted:     #7c6fa0;
+  --text-accent:    #f59e0b;
+
+  /* Borders */
+  --border-subtle:  rgba(255, 255, 255, 0.08);
+  --border-primary: rgba(124, 58, 237, 0.4);
+  --border-gold:    rgba(245, 158, 11, 0.4);
+
+  /* Glow */
+  --glow-purple: 0 0 40px rgba(124, 58, 237, 0.35);
+  --glow-gold:   0 0 30px rgba(245, 158, 11, 0.3);
+  --glow-sm:     0 0 20px rgba(124, 58, 237, 0.2);
+}
+
+/* ── Base Styles ── */
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--bg-base);
+    background-image: radial-gradient(ellipse at 20% 50%, rgba(124, 58, 237, 0.15) 0%, transparent 60%),
+                      radial-gradient(ellipse at 80% 20%, rgba(245, 158, 11, 0.08) 0%, transparent 50%),
+                      radial-gradient(ellipse at 60% 80%, rgba(147, 51, 234, 0.1) 0%, transparent 40%);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, sans-serif;
+    min-height: 100vh;
+  }
+
+  /* Scrollbar tuỳ chỉnh */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(124, 58, 237, 0.4);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(124, 58, 237, 0.6);
+  }
+
+  /* Selection */
+  ::selection {
+    background: rgba(124, 58, 237, 0.3);
+    color: #f8f5ff;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  a {
+    color: var(--color-primary-light);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  a:hover {
+    color: var(--color-gold-light);
+  }
+}
+
+/* ── Component Utilities ── */
+@layer components {
+
+  /* Glassmorphism card */
+  .glass-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-subtle);
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .glass-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-primary);
+    box-shadow: var(--glow-sm);
+    transform: translateY(-2px);
+  }
+
+  /* Gradient border effect */
+  .gradient-border {
+    position: relative;
+    background: var(--bg-card);
+    border-radius: 1rem;
+  }
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(124,58,237,0.5), rgba(245,158,11,0.3), rgba(124,58,237,0.1));
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .gradient-border:hover::before {
+    opacity: 1;
+  }
+
+  /* Shimmer loading skeleton */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(255,255,255,0.03) 0%,
+      rgba(255,255,255,0.08) 50%,
+      rgba(255,255,255,0.03) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s linear infinite;
+  }
+
+  /* Nút chính FGL */
+  .btn-fgl {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.5rem;
+    background: linear-gradient(135deg, #7c3aed, #9333ea);
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: 0.75rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.01em;
+  }
+  .btn-fgl::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .btn-fgl:hover {
+    box-shadow: var(--glow-purple);
+    transform: translateY(-1px);
+  }
+  .btn-fgl:hover::after {
+    opacity: 1;
+  }
+  .btn-fgl:active {
+    transform: translateY(0);
+  }
+
+  /* Nút vàng gold */
+  .btn-gold {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.5rem;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #1a0f3e;
+    font-weight: 700;
+    font-size: 0.875rem;
+    border-radius: 0.75rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .btn-gold:hover {
+    box-shadow: var(--glow-gold);
+    transform: translateY(-1px);
+  }
+
+  /* Input field */
+  .fgl-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.75rem;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    outline: none;
+  }
+  .fgl-input::placeholder {
+    color: var(--text-muted);
+  }
+  .fgl-input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+    background: rgba(255, 255, 255, 0.07);
+  }
+  .fgl-input.error {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+  }
+
+  /* Tier badges */
+  .badge-free     { background: rgba(107,114,128,0.2); color: #9ca3af; border: 1px solid rgba(107,114,128,0.3); }
+  .badge-regular  { background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+  .badge-vip      { background: rgba(124,58,237,0.2);  color: #c4b5fd; border: 1px solid rgba(124,58,237,0.4); }
+  .badge-vip-pro  { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.4); }
+
+  /* Metric card */
+  .metric-card {
+    @apply glass-card p-6;
+    position: relative;
+    overflow: hidden;
+  }
+  .metric-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,58,237,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+}
+
+/* ── Utility Classes ── */
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, #c4b5fd, #f8f5ff, #fbbf24);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-purple {
+    background: linear-gradient(135deg, #a78bfa, #7c3aed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glow effects */
+  .glow-purple { box-shadow: var(--glow-purple); }
+  .glow-gold   { box-shadow: var(--glow-gold); }
+  .glow-sm     { box-shadow: var(--glow-sm); }
+
+  /* Blur overlay */
+  .blur-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 10, 30, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 40;
+  }
+
+  /* Animated gradient background */
+  .bg-animated {
+    background: linear-gradient(135deg, #0f0a1e, #1a0f3e, #2d1b69, #1a0f3e, #0f0a1e);
+    background-size: 300% 300%;
+    animation: gradientShift 8s ease infinite;
+  }
+
+  /* Hide scrollbar but allow scroll */
+  .scroll-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scroll-hidden::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ── Keyframes (bổ sung cho Tailwind) ── */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 20px rgba(124, 58, 237, 0.3); }
+  to   { box-shadow: 0 0 40px rgba(124, 58, 237, 0.7); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Responsive typography ── */
+@media (max-width: 640px) {
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.375rem; }
+}
