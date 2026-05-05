@@ -67,7 +67,6 @@ export function formatRelativeTime(date: string | Date): string {
 /** Tên hiển thị cho tier */
 export function getTierName(tier: TenantTier): string {
   const names: Record<TenantTier, string> = {
-    free: 'Miễn phí',
     regular: 'Regular',
     vip: 'VIP',
     vip_pro: 'VIP Pro',
@@ -78,7 +77,6 @@ export function getTierName(tier: TenantTier): string {
 /** Màu badge theo tier */
 export function getTierClass(tier: TenantTier): string {
   const classes: Record<TenantTier, string> = {
-    free: 'badge-free',
     regular: 'badge-regular',
     vip: 'badge-vip',
     vip_pro: 'badge-vip-pro',
@@ -88,7 +86,7 @@ export function getTierClass(tier: TenantTier): string {
 
 /** Kiểm tra user có quyền truy cập feature không */
 export function canAccess(userTier: TenantTier, requiredTier: TenantTier): boolean {
-  const order: TenantTier[] = ['free', 'regular', 'vip', 'vip_pro'];
+  const order: TenantTier[] = ['regular', 'vip', 'vip_pro'];
   return order.indexOf(userTier) >= order.indexOf(requiredTier);
 }
 

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { 
   BarChart3, TrendingUp, Users, Calendar, 
   Filter, Download, ChevronDown, ArrowUpRight, 
-  ArrowDownRight, Target, MousePointer2, Percent
+  ArrowDownRight, Target, MousePointer2, Percent, Sparkles
 } from 'lucide-react';
 import {
   XAxis, YAxis, CartesianGrid, Tooltip,
