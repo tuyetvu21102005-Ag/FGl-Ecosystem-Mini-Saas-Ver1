@@ -33,11 +33,18 @@ export const metadata: Metadata = {
   viewport: 'width=device-width, initial-scale=1',
 };
 
+import ChatWidget from '@/components/chat/ChatWidget';
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="vi" className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-sans antialiased">
         {children}
+        {/* AI Chat Widget - Hiển thị trên toàn bộ trang web */}
+        <ChatWidget 
+          tenantId="00000000-0000-0000-0000-000000000000" // ID mặc định của Platform
+          spaName="Feel Great Life"
+        />
       </body>
     </html>
   );
