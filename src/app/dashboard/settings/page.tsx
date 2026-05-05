@@ -6,7 +6,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Building2, User, Bell, Shield, Save, Phone, MapPin } from 'lucide-react';
+import { Building2, User, Bell, Shield, Save, Phone, MapPin, Zap } from 'lucide-react';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -18,6 +18,7 @@ const tabs = [
   { id: 'account',  label: 'Tài khoản',       icon: User },
   { id: 'notify',   label: 'Thông báo',       icon: Bell },
   { id: 'security', label: 'Bảo mật',         icon: Shield },
+  { id: 'integrations', label: 'Tích hợp',   icon: Zap },
 ];
 
 export default function SettingsPage() {
@@ -191,6 +192,62 @@ export default function SettingsPage() {
                 </div>
               </CardContent>
             </Card>
+          </motion.div>
+        {/* Tab: Tích hợp */}
+        {activeTab === 'integrations' && (
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-green-400">
+                  <div className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4 3H20C21.1 3 22 3.9 22 5V19C22 20.1 21.1 21 20 21H4C2.9 21 2 20.1 2 19V5C2 3.9 2.9 3 4 3Z" stroke="#10b981" strokeWidth="2"/>
+                      <path d="M2 9H22M9 3V21" stroke="#10b981" strokeWidth="2"/>
+                    </svg>
+                  </div>
+                  Google Sheets (CRM Sync)
+                </CardTitle>
+                <CardDescription>Tự động đồng bộ Leads sang bảng tính Google Sheets</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <Input label="Google Apps Script Webhook URL" placeholder="https://script.google.com/macros/s/.../exec" hint="Dán URL Webhook từ Google Apps Script của bạn tại đây" />
+                <Input label="Google Sheet ID" placeholder="1abc2def3ghi4jkl5mno" hint="Lấy từ URL của bảng tính của bạn" />
+                <div className="p-4 rounded-xl bg-fgl-purple-600/10 border border-fgl-purple-500/20">
+                  <h4 className="text-xs font-bold text-white mb-1">Hướng dẫn nhanh:</h4>
+                  <ol className="text-[10px] text-[var(--text-muted)] space-y-1 list-decimal ml-4">
+                    <li>Mở Google Sheet của bạn.</li>
+                    <li>Tiện ích mở rộng {">"} Apps Script.</li>
+                    <li>Dán đoạn mã webhook và Triển khai (Deploy).</li>
+                    <li>Copy URL nhận được dán vào đây.</li>
+                  </ol>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Webhook tùy chỉnh</CardTitle>
+                <CardDescription>Kết nối với các công cụ CRM khác như Make.com, Zapier</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <Input label="Webhook URL" placeholder="https://hook.make.com/..." />
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-white">Sự kiện kích hoạt:</p>
+                  <div className="flex gap-4">
+                    <label className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
+                      <input type="checkbox" defaultChecked className="accent-fgl-purple-500" /> Lead mới
+                    </label>
+                    <label className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
+                      <input type="checkbox" defaultChecked className="accent-fgl-purple-500" /> Booking mới
+                    </label>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <div className="flex justify-end">
+              <Button onClick={handleSave} loading={saving} leftIcon={<Save size={15}/>}>Lưu cấu hình tích hợp</Button>
+            </div>
           </motion.div>
         )}
       </div>

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { calculateLeadScore } from '@/lib/ai/scoring';
 
 // Sử dụng Service Role Key để có quyền insert vào bảng leads mà không cần Auth
 const supabaseAdmin = createClient(
@@ -25,6 +26,18 @@ async function sendTelegramNotification(lead: any) {
 🚀 *Hãy liên hệ ngay để chốt lịch!*
   `;
 
+  const inline_keyboard = {
+    inline_keyboard: [
+      [
+        { text: '✅ Xác nhận lịch', callback_data: `confirm_booking_${lead.id}` },
+        { text: '📞 Gọi ngay', url: `tel:${lead.phone}` }
+      ],
+      [
+        { text: '🌐 Xem trên Dashboard', url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/leads/${lead.id}` }
+      ]
+    ]
+  };
+
   try {
     await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
       method: 'POST',
@@ -33,6 +46,7 @@ async function sendTelegramNotification(lead: any) {
         chat_id: TELEGRAM_CHAT_ID,
         text: message,
         parse_mode: 'Markdown',
+        reply_markup: inline_keyboard
       }),
     });
   } catch (error) {
@@ -42,7 +56,7 @@ async function sendTelegramNotification(lead: any) {
 
 export async function POST(req: Request) {
   try {
-    const { name, phone, email, tenant_id, notes } = await req.json();
+    const { name, phone, email, tenant_id, notes, messages } = await req.json();
 
     if (!tenant_id) {
       return NextResponse.json({ error: 'Thiếu tenant_id' }, { status: 400 });
@@ -51,6 +65,13 @@ export async function POST(req: Request) {
     if (!phone && !email) {
       return NextResponse.json({ error: 'Cần số điện thoại hoặc email' }, { status: 400 });
     }
+
+    // Lấy thông tin tenant để kiểm tra cài đặt webhook
+    const { data: tenant } = await supabaseAdmin
+      .from('tenants')
+      .select('settings')
+      .eq('id', tenant_id)
+      .single();
 
     // Insert lead vào Supabase
     const { data, error } = await supabaseAdmin
@@ -63,7 +84,7 @@ export async function POST(req: Request) {
         source: 'chat',
         notes: notes || 'Lead từ AI Chat Widget',
         status: 'new',
-        score: 50, // Lead từ Chat thường có tiềm năng trung bình
+        score: messages ? calculateLeadScore(messages) : 50,
       })
       .select()
       .single();
@@ -75,6 +96,12 @@ export async function POST(req: Request) {
 
     // Gửi thông báo Telegram
     await sendTelegramNotification(data);
+
+    // Gửi thông báo Webhook (Google Sheets/CRM) nếu có cấu hình
+    if (tenant?.settings?.webhook_url) {
+      const { sendWebhookNotification } = await import('@/lib/integrations/webhook');
+      await sendWebhookNotification(tenant.settings.webhook_url, data);
+    }
 
     return NextResponse.json({ success: true, data });
   } catch (error) {

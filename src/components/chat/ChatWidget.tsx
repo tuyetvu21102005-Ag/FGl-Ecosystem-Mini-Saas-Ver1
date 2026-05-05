@@ -86,7 +86,7 @@ export default function ChatWidget({
 
       // Nếu tìm thấy SĐT và chưa capture lead
       if (foundPhone && !leadCaptured) {
-        await captureLead(foundPhone[0], inputValue);
+        await captureLead(foundPhone[0], inputValue, messages.concat(userMessage, assistantMessage));
       }
 
     } catch (error) {
@@ -96,7 +96,7 @@ export default function ChatWidget({
     }
   };
 
-  const captureLead = async (phone: string, text: string) => {
+  const captureLead = async (phone: string, text: string, history: Message[]) => {
     try {
       await fetch('/api/public/leads', {
         method: 'POST',
@@ -105,7 +105,8 @@ export default function ChatWidget({
           tenant_id: tenantId,
           phone: phone,
           name: 'Khách hàng từ Chat',
-          notes: `Khách quan tâm: ${text}`
+          notes: `Khách quan tâm: ${text}`,
+          messages: history.map(m => ({ role: m.role, content: m.content }))
         }),
       });
       setLeadCaptured(true);
