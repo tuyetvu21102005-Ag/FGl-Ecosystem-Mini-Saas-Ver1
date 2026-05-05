@@ -7,7 +7,10 @@ import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
 // Routes không cần đăng nhập
-const PUBLIC_ROUTES = ['/', '/login', '/register', '/forgot-password', '/auth/callback'];
+const PUBLIC_ROUTES = [
+  '/', '/login', '/register', '/forgot-password', '/auth/callback',
+  '/api/chat', '/api/public'
+];
 
 export async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
