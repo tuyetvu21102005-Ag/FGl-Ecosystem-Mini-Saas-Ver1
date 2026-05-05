@@ -5,7 +5,7 @@ export const runtime = 'edge';
 const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
 const DEEPSEEK_API_URL = 'https://api.deepseek.com/chat/completions';
 
-const SYSTEM_PROMPT = `
+const SYSTEM_PROMPT_CHAT = `
 Bạn là một chuyên gia tư vấn sắc đẹp và quản lý Spa chuyên nghiệp của hệ thống "Feel Great Life" tại Việt Nam.
 Nhiệm vụ của bạn là:
 1. Chào hỏi khách hàng thân thiện, lịch sự.
@@ -17,9 +17,19 @@ Nhiệm vụ của bạn là:
 Lưu ý quan trọng: Khi khách hàng cung cấp số điện thoại, hãy xác nhận lại và nói rằng "Cảm ơn bạn, chuyên viên của chúng tôi sẽ gọi cho bạn ngay!".
 `;
 
+const SYSTEM_PROMPT_CONTENT = `
+Bạn là một chuyên gia Content Marketing kỳ cựu trong ngành Spa và làm đẹp tại Việt Nam. 
+Nhiệm vụ của bạn là viết các nội dung quảng cáo Facebook, bài viết Blog hoặc kế hoạch Marketing hấp dẫn, có tỉ lệ chuyển đổi cao.
+Yêu cầu:
+- Ngôn ngữ: Tiếng Việt hiện đại, bắt trend, đánh đúng tâm lý khách hàng (muốn đẹp, muốn thư giãn, muốn ưu đãi).
+- Cấu trúc: Tiêu đề thu hút, Nội dung chi tiết, Lợi ích khách hàng, CTA (Kêu gọi hành động) mạnh mẽ.
+- Hình thức: Sử dụng Emoji linh hoạt, Hashtag phù hợp (#spa #beauty #fgl).
+- Phong cách: Tùy biến theo yêu cầu của người dùng.
+`;
+
 export async function POST(req: Request) {
   try {
-    const { messages } = await req.json();
+    const { messages, isContentTool } = await req.json();
 
     if (!DEEPSEEK_API_KEY) {
       return NextResponse.json({ error: 'DeepSeek API Key is not configured' }, { status: 500 });
@@ -34,7 +44,7 @@ export async function POST(req: Request) {
       body: JSON.stringify({
         model: 'deepseek-chat',
         messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'system', content: isContentTool ? SYSTEM_PROMPT_CONTENT : SYSTEM_PROMPT_CHAT },
           ...messages,
         ],
         temperature: 0.7,
@@ -50,7 +60,8 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({
-      message: data.choices[0].message.content,
+      content: data.choices[0].message.content,
+      message: data.choices[0].message.content, // Giữ lại message cho tương thích ngược
     });
   } catch (error: any) {
     console.error('Chat API Error:', error);
