@@ -6,7 +6,7 @@
 // ── Enum Types ──────────────────────────────────────────────
 
 /** Gói dịch vụ của spa */
-export type TenantTier = 'free' | 'regular' | 'vip' | 'vip_pro';
+export type TenantTier = 'regular' | 'vip' | 'vip_pro';
 
 /** Vai trò người dùng trong spa */
 export type UserRole = 'owner' | 'manager' | 'staff';

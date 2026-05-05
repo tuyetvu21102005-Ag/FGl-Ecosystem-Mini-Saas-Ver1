@@ -26,7 +26,7 @@ const navItems: NavItem[] = [
     label: 'Tổng quan',
     href: '/dashboard',
     icon: LayoutDashboard,
-    tier: ['free', 'regular', 'vip', 'vip_pro'],
+    tier: ['regular', 'vip', 'vip_pro'],
   },
   {
     label: 'Khách hàng',
@@ -44,7 +44,7 @@ const navItems: NavItem[] = [
     label: 'AI Chat Widget',
     href: '/dashboard/chat',
     icon: MessageSquare,
-    tier: ['free', 'regular', 'vip', 'vip_pro'],
+    tier: ['regular', 'vip', 'vip_pro'],
   },
   {
     label: 'Nội dung AI',
@@ -62,7 +62,7 @@ const navItems: NavItem[] = [
     label: 'Báo cáo',
     href: '/dashboard/analytics',
     icon: BarChart3,
-    tier: ['vip_pro'],
+    tier: ['vip', 'vip_pro'],
   },
   {
     label: 'Automation',
@@ -77,7 +77,7 @@ const bottomNavItems: NavItem[] = [
     label: 'Cài đặt',
     href: '/dashboard/settings',
     icon: Settings,
-    tier: ['free', 'regular', 'vip', 'vip_pro'],
+    tier: ['regular', 'vip', 'vip_pro'],
   },
 ];
 

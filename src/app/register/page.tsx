@@ -24,15 +24,6 @@ import { TenantTier } from '@/types';
 
 const tiers = [
   {
-    id: 'free' as TenantTier,
-    name: 'Miễn phí',
-    price: 0,
-    desc: 'Khám phá FGL',
-    features: ['Quiz Tool', 'Chat Widget (5 sessions/tháng)', 'Dashboard cơ bản'],
-    color: 'border-gray-500/30',
-    highlight: false,
-  },
-  {
     id: 'regular' as TenantTier,
     name: 'Regular',
     price: 199000,
@@ -82,7 +73,7 @@ type Step2Form = z.infer<typeof step2Schema>;
 
 export default function RegisterPage() {
   const [step, setStep] = useState(1);
-  const [selectedTier, setSelectedTier] = useState<TenantTier>('free');
+  const [selectedTier, setSelectedTier] = useState<TenantTier>('regular');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [step1Data, setStep1Data] = useState<Step1Form | null>(null);
@@ -193,7 +184,7 @@ export default function RegisterPage() {
             {step === 1 && (
               <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
                 <h1 className="text-2xl font-bold text-white mb-1">Tạo tài khoản</h1>
-                <p className="text-[var(--text-muted)] text-sm mb-6">Bắt đầu với 14 ngày miễn phí, không cần thẻ</p>
+                <p className="text-[var(--text-muted)] text-sm mb-6">Giải pháp AI toàn diện cho Spa của bạn</p>
 
                 {/* Google */}
                 <button
