@@ -17,7 +17,6 @@ interface TierBadgeProps {
 }
 
 const tierConfig: Record<TenantTier, { label: string; className: string }> = {
-  free:    { label: 'Miễn phí', className: 'bg-gray-500/20 text-gray-400 border-gray-500/30' },
   regular: { label: 'Regular',  className: 'bg-blue-500/15 text-blue-400 border-blue-500/30' },
   vip:     { label: 'VIP',      className: 'bg-fgl-purple-600/20 text-fgl-purple-300 border-fgl-purple-600/40' },
   vip_pro: { label: '⭐ VIP Pro', className: 'bg-fgl-gold-500/15 text-fgl-gold-400 border-fgl-gold-500/40' },

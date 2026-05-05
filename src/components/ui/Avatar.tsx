@@ -28,7 +28,6 @@ const avatarSizes = {
 };
 
 const tierColors: Record<TenantTier, string> = {
-  free:    'bg-gray-500',
   regular: 'bg-blue-500',
   vip:     'bg-fgl-purple-500',
   vip_pro: 'bg-fgl-gold-500',
@@ -71,7 +70,7 @@ export const Avatar: React.FC<AvatarProps> = ({
       </div>
 
       {/* Tier indicator dot */}
-      {showTier && tier && tier !== 'free' && (
+      {showTier && tier && (
         <div
           className={cn(
             'absolute -bottom-0.5 -right-0.5 rounded-full',

@@ -123,7 +123,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ user }) => {
       {/* Nav items */}
       <nav className="flex-1 py-4 px-2 space-y-1 overflow-y-auto scroll-hidden">
         {navItems.map((item) => {
-          const hasAccess = canAccess(userTier, item.tier?.[0] ?? 'free');
+          const hasAccess = canAccess(userTier, item.tier?.[0] ?? 'regular');
           const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
           const Icon = item.icon;
 
