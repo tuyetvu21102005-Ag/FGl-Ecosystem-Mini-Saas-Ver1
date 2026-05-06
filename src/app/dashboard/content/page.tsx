@@ -3,9 +3,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Sparkles, Facebook, Calendar, PenTool, 
+  Sparkles, MessageSquare, Calendar, PenTool, 
   ChevronRight, ArrowLeft, Copy, Check, 
-  RotateCcw, Send, Settings2, Hash
+  RotateCcw, Send
 } from 'lucide-react';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
@@ -22,7 +22,7 @@ const tools = [
     id: 'facebook' as ToolType,
     name: 'Facebook Caption Generator',
     desc: 'Tạo bài viết quảng cáo thu hút khách hàng cho Fanpage Spa.',
-    icon: Facebook,
+    icon: MessageSquare,
     color: 'text-blue-400',
     bgColor: 'bg-blue-400/10',
     tier: ['vip', 'vip_pro'],

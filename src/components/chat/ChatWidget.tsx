@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageSquare, X, Send, User, Sparkles, Phone, CheckCircle2 } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
+import { MessageSquare, X, Send, Sparkles, CheckCircle2 } from 'lucide-react';
 
 interface Message {
   id: string;

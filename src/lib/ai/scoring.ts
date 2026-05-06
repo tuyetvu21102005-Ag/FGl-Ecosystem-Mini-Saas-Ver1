@@ -4,7 +4,7 @@
  * Đánh giá mức độ tiềm năng của khách hàng dựa trên nội dung hội thoại.
  */
 
-export function calculateLeadScore(messages: any[]): number {
+export function calculateLeadScore(messages: { content: string }[]): number {
   let score = 30; // Điểm khởi điểm cơ bản
 
   const chatContent = messages.map(m => m.content).join(' ').toLowerCase();

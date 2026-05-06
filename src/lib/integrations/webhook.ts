@@ -1,5 +1,5 @@
 
-export async function sendWebhookNotification(url: string, data: any) {
+export async function sendWebhookNotification(url: string, data: unknown) {
   if (!url) return;
 
   try {

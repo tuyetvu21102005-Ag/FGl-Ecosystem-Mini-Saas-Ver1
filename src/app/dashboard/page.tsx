@@ -114,6 +114,12 @@ const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?:
 // ── Main Dashboard Page ──────────────────────────────────────
 
 export default function DashboardPage() {
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <DashboardLayout title="Tổng quan" breadcrumb={[{ label: 'Tổng quan' }]}>
       <div className="space-y-8">
@@ -198,26 +204,34 @@ export default function DashboardPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <ResponsiveContainer width="100%" height={220}>
-                  <AreaChart data={chartData}>
-                    <defs>
-                      <linearGradient id="colorLeads" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%"  stopColor="#7c3aed" stopOpacity={0.3} />
-                        <stop offset="95%" stopColor="#7c3aed" stopOpacity={0} />
-                      </linearGradient>
-                      <linearGradient id="colorBookings" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%"  stopColor="#10b981" stopOpacity={0.3} />
-                        <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                    <XAxis dataKey="date" tick={{ fill: '#7c6fa0', fontSize: 12 }} axisLine={false} tickLine={false} />
-                    <YAxis tick={{ fill: '#7c6fa0', fontSize: 12 }} axisLine={false} tickLine={false} />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Area type="monotone" dataKey="leads"    stroke="#7c3aed" fill="url(#colorLeads)"    strokeWidth={2} dot={{ fill: '#7c3aed', r: 4 }} />
-                    <Area type="monotone" dataKey="bookings" stroke="#10b981" fill="url(#colorBookings)" strokeWidth={2} dot={{ fill: '#10b981', r: 4 }} />
-                  </AreaChart>
-                </ResponsiveContainer>
+                <div className="h-[220px] w-full">
+                  {mounted ? (
+                    <ResponsiveContainer width="100%" height="100%">
+                      <AreaChart data={chartData}>
+                        <defs>
+                          <linearGradient id="colorLeads" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%"  stopColor="#7c3aed" stopOpacity={0.3} />
+                            <stop offset="95%" stopColor="#7c3aed" stopOpacity={0} />
+                          </linearGradient>
+                          <linearGradient id="colorBookings" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%"  stopColor="#10b981" stopOpacity={0.3} />
+                            <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                        <XAxis dataKey="date" tick={{ fill: '#7c6fa0', fontSize: 12 }} axisLine={false} tickLine={false} />
+                        <YAxis tick={{ fill: '#7c6fa0', fontSize: 12 }} axisLine={false} tickLine={false} />
+                        <Tooltip content={<CustomTooltip />} />
+                        <Area type="monotone" dataKey="leads"    stroke="#7c3aed" fill="url(#colorLeads)"    strokeWidth={2} dot={{ fill: '#7c3aed', r: 4 }} />
+                        <Area type="monotone" dataKey="bookings" stroke="#10b981" fill="url(#colorBookings)" strokeWidth={2} dot={{ fill: '#10b981', r: 4 }} />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  ) : (
+                    <div className="w-full h-full bg-white/5 animate-pulse rounded-xl flex items-center justify-center">
+                      <span className="text-xs text-[var(--text-muted)]">Đang tải biểu đồ...</span>
+                    </div>
+                  )}
+                </div>
                 <div className="flex items-center gap-4 mt-2">
                   <div className="flex items-center gap-1.5 text-xs text-[var(--text-muted)]">
                     <span className="w-3 h-0.5 bg-fgl-purple-500 rounded" /> Lead mới

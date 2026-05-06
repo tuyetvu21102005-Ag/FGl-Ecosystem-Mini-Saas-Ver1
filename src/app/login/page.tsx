@@ -196,7 +196,7 @@ export default function LoginPage() {
           <p className="text-center text-sm text-[var(--text-muted)] mt-6">
             Chưa có tài khoản?{' '}
             <Link href="/register" className="text-fgl-purple-400 hover:text-fgl-purple-300 font-medium">
-              Đăng ký miễn phí
+              Đăng ký ngay
             </Link>
           </p>
         </motion.div>

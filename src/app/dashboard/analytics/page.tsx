@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   BarChart3, TrendingUp, Users, Calendar, 
-  Filter, Download, ChevronDown, ArrowUpRight, 
-  ArrowDownRight, Target, MousePointer2, Percent, Sparkles
+  Download, ArrowUpRight, 
+  ArrowDownRight, Target, Percent, Sparkles
 } from 'lucide-react';
 import {
   XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, AreaChart, Area,
-  BarChart, Bar, Legend, PieChart, Pie, Cell
+  PieChart, Pie, Cell
 } from 'recharts';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
@@ -36,14 +36,9 @@ const sourceData = [
   { name: 'Khác', value: 10, color: '#f59e0b' },
 ];
 
-const monthlyComparison = [
-  { name: 'Tháng trước', leads: 450, bookings: 180, revenue: 85000000 },
-  { name: 'Tháng này', leads: 580, bookings: 240, revenue: 112000000 },
-];
-
 // ── Components ───────────────────────────────────────────────
 
-const StatCard = ({ title, value, change, icon, delay = 0 }: any) => (
+const StatCard = ({ title, value, change, icon, delay = 0 }: { title: string; value: string; change: number; icon: React.ReactNode; delay?: number }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -68,7 +63,12 @@ const StatCard = ({ title, value, change, icon, delay = 0 }: any) => (
 );
 
 export default function AnalyticsPage() {
+  const [mounted, setMounted] = React.useState(false);
   const [timeRange, setTimeRange] = useState('weekly');
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <DashboardLayout title="Báo cáo chuyên sâu" breadcrumb={[{ label: 'Báo cáo', href: '/dashboard/analytics' }]}>
@@ -120,24 +120,28 @@ export default function AnalyticsPage() {
             </CardHeader>
             <CardContent>
               <div className="h-[350px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={weeklyData}>
-                    <defs>
-                      <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#7c3aed" stopOpacity={0.3}/>
-                        <stop offset="95%" stopColor="#7c3aed" stopOpacity={0}/>
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                    <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 12}} />
-                    <YAxis axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 12}} />
-                    <Tooltip 
-                      contentStyle={{ backgroundColor: '#1e1b4b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}
-                      itemStyle={{ color: '#fff' }}
-                    />
-                    <Area type="monotone" dataKey="revenue" stroke="#7c3aed" fillOpacity={1} fill="url(#colorRev)" strokeWidth={3} />
-                  </AreaChart>
-                </ResponsiveContainer>
+                {mounted ? (
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={weeklyData}>
+                      <defs>
+                        <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#7c3aed" stopOpacity={0.3}/>
+                          <stop offset="95%" stopColor="#7c3aed" stopOpacity={0}/>
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                      <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 12}} />
+                      <YAxis axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 12}} />
+                      <Tooltip 
+                        contentStyle={{ backgroundColor: '#1e1b4b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}
+                        itemStyle={{ color: '#fff' }}
+                      />
+                      <Area type="monotone" dataKey="revenue" stroke="#7c3aed" fillOpacity={1} fill="url(#colorRev)" strokeWidth={3} />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <div className="w-full h-full bg-white/5 animate-pulse rounded-2xl" />
+                )}
               </div>
             </CardContent>
           </Card>
@@ -149,24 +153,30 @@ export default function AnalyticsPage() {
             </CardHeader>
             <CardContent>
               <div className="h-[250px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={sourceData}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={60}
-                      outerRadius={80}
-                      paddingAngle={5}
-                      dataKey="value"
-                    >
-                      {sourceData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                  </PieChart>
-                </ResponsiveContainer>
+                {mounted ? (
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={sourceData}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={60}
+                        outerRadius={80}
+                        paddingAngle={5}
+                        dataKey="value"
+                      >
+                        {sourceData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                    </PieChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <div className="w-32 h-32 rounded-full border-4 border-white/5 border-t-fgl-purple-500 animate-spin" />
+                  </div>
+                )}
               </div>
               <div className="space-y-3 mt-4">
                 {sourceData.map((item) => (

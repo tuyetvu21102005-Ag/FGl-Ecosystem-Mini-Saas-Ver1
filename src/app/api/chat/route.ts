@@ -63,7 +63,7 @@ export async function POST(req: Request) {
       content: data.choices[0].message.content,
       message: data.choices[0].message.content, // Giữ lại message cho tương thích ngược
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Chat API Error:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }

@@ -11,7 +11,13 @@ const supabaseAdmin = createClient(
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
-async function sendTelegramNotification(lead: any) {
+async function sendTelegramNotification(lead: { 
+  id?: string; 
+  name?: string; 
+  phone?: string; 
+  email?: string; 
+  notes?: string; 
+}) {
   if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
 
   const message = `

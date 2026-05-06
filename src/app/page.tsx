@@ -23,8 +23,7 @@ const features = [
 ];
 
 const tiers = [
-  { id: 'free',    name: 'Miễn phí', price: 0,   features: ['Quiz Tool', 'Chat 5 sessions/tháng', 'Dashboard cơ bản'],                  cta: 'Bắt đầu miễn phí', highlight: false, badgeClass: 'text-gray-400 border-gray-500/30' },
-  { id: 'regular', name: 'Regular',  price: 199,  features: ['Booking Module', 'CRM cơ bản', '2 Content Tools', 'Chat không giới hạn'],   cta: 'Dùng thử 14 ngày', highlight: false, badgeClass: 'text-blue-400 border-blue-500/40' },
+  { id: 'regular', name: 'Regular',  price: 199,  features: ['Booking Module', 'CRM cơ bản', '2 Content Tools', 'Chat không giới hạn'],   cta: 'Bắt đầu ngay', highlight: false, badgeClass: 'text-blue-400 border-blue-500/40' },
   { id: 'vip',     name: '⭐ VIP',   price: 499,  features: ['Full 3 modules', 'Top 3 AI Tools', 'Marketing Co-Pilot', 'Coaching nhóm'],  cta: 'Chọn VIP',         highlight: true,  badgeClass: 'text-fgl-purple-300 border-fgl-purple-500/60' },
   { id: 'vip_pro', name: '👑 VIP Pro', price: 999, features: ['Full 8 AI Tools', 'Dashboard VIP', 'Automation', 'Coaching 1-1'],          cta: 'Liên hệ ngay',     highlight: false, badgeClass: 'text-fgl-gold-400 border-fgl-gold-500/50' },
 ];
@@ -51,7 +50,7 @@ export default function LandingPage() {
           </div>
           <div className="hidden md:flex items-center gap-3">
             <Link href="/login" className="text-sm text-[var(--text-muted)] hover:text-white px-3 py-2">Đăng nhập</Link>
-            <Link href="/register"><Button size="sm">Dùng thử miễn phí</Button></Link>
+            <Link href="/register"><Button size="sm">Đăng ký ngay</Button></Link>
           </div>
           <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden w-9 h-9 flex items-center justify-center text-white/70">{mobileOpen ? <X size={20}/> : <Menu size={20}/>}</button>
         </div>
@@ -59,7 +58,7 @@ export default function LandingPage() {
           <div className="md:hidden px-6 pb-4 flex flex-col gap-3 border-t border-white/[0.06]">
             <div className="flex gap-3 pt-3">
               <Link href="/login" className="flex-1"><Button variant="outline" fullWidth size="sm">Đăng nhập</Button></Link>
-              <Link href="/register" className="flex-1"><Button fullWidth size="sm">Dùng thử</Button></Link>
+              <Link href="/register" className="flex-1"><Button fullWidth size="sm">Đăng ký ngay</Button></Link>
             </div>
           </div>
         )}
@@ -80,7 +79,7 @@ export default function LandingPage() {
             FGL tự động hóa marketing, chăm sóc khách hàng và quản lý booking — giúp bạn tăng 3x doanh thu mà không cần thuê thêm nhân viên
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/register"><Button size="lg" rightIcon={<ArrowRight size={18}/>}>Bắt đầu miễn phí — không cần thẻ</Button></Link>
+            <Link href="/register"><Button size="lg" rightIcon={<ArrowRight size={18}/>}>Đăng ký ngay — Tăng trưởng 3x</Button></Link>
             <Link href="#features"><Button variant="outline" size="lg">Xem tính năng</Button></Link>
           </motion.div>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="flex items-center justify-center gap-6 mt-12 flex-wrap">
@@ -131,9 +130,9 @@ export default function LandingPage() {
           <FadeUp className="text-center mb-14">
             <span className="text-xs font-semibold text-fgl-purple-400 uppercase tracking-widest">Bảng giá</span>
             <h2 className="text-3xl font-bold text-white mt-2 mb-3">Chọn gói phù hợp với spa của bạn</h2>
-            <p className="text-[var(--text-muted)]">Tất cả gói đều có 14 ngày dùng thử miễn phí</p>
+            <p className="text-[var(--text-muted)]">Cam kết hỗ trợ triển khai 1-1 cho mọi khách hàng</p>
           </FadeUp>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {tiers.map((tier, i) => (
               <FadeUp key={tier.id} delay={i * 0.05}>
                 <div className={cn('p-6 rounded-2xl border relative transition-all hover:-translate-y-1', tier.highlight ? 'bg-fgl-purple-600/10 border-fgl-purple-500/60 shadow-fgl-sm' : `bg-white/[0.02] ${tier.badgeClass.includes('gray') ? 'border-gray-500/20' : tier.badgeClass.includes('blue') ? 'border-blue-500/25' : 'border-fgl-gold-500/30'}`)}>
@@ -190,9 +189,9 @@ export default function LandingPage() {
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_50%,rgba(124,58,237,0.2),transparent_70%)]"/>
             <Crown size={32} className="text-fgl-gold-400 mx-auto mb-4 relative z-10"/>
             <h2 className="text-3xl font-bold text-white mb-3 relative z-10">Sẵn sàng tăng trưởng cùng FGL?</h2>
-            <p className="text-[var(--text-muted)] mb-8 relative z-10">Thiết lập trong 5 phút, dùng thử 14 ngày miễn phí.</p>
+            <p className="text-[var(--text-muted)] mb-8 relative z-10">Thiết lập nhanh chóng, hỗ trợ tận tâm.</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10">
-              <Link href="/register"><Button size="lg" rightIcon={<ArrowRight size={18}/>}>Bắt đầu miễn phí ngay</Button></Link>
+              <Link href="/register"><Button size="lg" rightIcon={<ArrowRight size={18}/>}>Đăng ký ngay</Button></Link>
               <Link href="/register"><Button variant="gold" size="lg">Xem demo live</Button></Link>
             </div>
           </div>
