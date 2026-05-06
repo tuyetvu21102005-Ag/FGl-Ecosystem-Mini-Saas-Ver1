@@ -42,7 +42,7 @@ const getMockUser = (): UserWithProfile => ({
   },
 });
 
-export default async function DashboardLayout({ children, title, breadcrumb }: DashboardLayoutProps) {
+export default function DashboardLayout({ children, title, breadcrumb }: DashboardLayoutProps) {
   // TODO: Thay mock bằng Supabase query sau khi cấu hình credentials
   // const supabase = await createClient();
   // const { data: { user } } = await supabase.auth.getUser();
